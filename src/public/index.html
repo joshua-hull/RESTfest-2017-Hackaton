@@ -2,22 +2,22 @@
 <html>
     <head>
         <title>SuperBad</title>
-        <link href="./semantic.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     </head>
     <body>
-        <div id="allthethings">
         <h1 id="title" class="">Super Awesome Search</h1>
-        </div>
-        <div>
+        <div class="container-fluid">
             <form id="search" action="/hospitals">
                 <h2 id=searchTitle>Search Hospital</h2>
-                <div>
-                    <input type="text" name="name" placeholder="Name of Hospital" />
+                <div class="form-group">
+                    <label for="name">Hospital Name: </label>
+                    <input type="text" name="name" id="name" placeholder="Name of Hospital" class="form-control" />
                 </div>
-                <div>
-                    <input type="text" name="state" placeholder="SC for ex..."/>
+                <div class="form-group">
+                    <label for="state">State: </label>
+                    <input type="text" name="state" id="state" placeholder="SC for ex..."  class="form-control" />
                 </div>
-                <input type="submit" value="Search"/>
+                <input class="btn btn-primary" type="submit" value="Search" />
             </form>
         </div>
     </body>
