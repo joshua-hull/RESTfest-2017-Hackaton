@@ -1,5 +1,6 @@
 const express = require('express');
 const mongo = require('mongodb');
+const path = require('path');
 const MongoClient = mongo.MongoClient;
 const ObjectID = mongo.ObjectID;
 
@@ -19,13 +20,33 @@ function returnResults(res) {
     }
 }
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+    res.send(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/hospitals', (req, res) => {
-    db.collection(COLLECTION).find()
+    let selector = {};
+    if (req.query.name !== undefined && req.query.name !== '') selector['Hospital Name'] = req.query.name;
+    if (req.query.state !== undefined && req.query.state !== '') selector['State'] = req.query.state;
+    console.log('Selector:', selector);
+    db.collection(COLLECTION).find(selector)
         .toArray(returnResults(res));
+
+    /*
+    db.getCollection('hospitals').find({
+        $and: [
+            {"HCAHPS Measure ID": "H_CLEAN_STAR_RATING" },
+            {"State": "SC"}
+        ]
+    },
+    {
+        "Hospital Name":1,
+        "HCAHPS Measure ID": 1,
+        "HCAHPS Question": 1,
+        "Patient Survey Star Rating":1
+    });
+    */
 });
 
 app.get('/hospitals/:id', (req, res) => {
