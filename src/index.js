@@ -8,6 +8,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URL = 'mongodb://api:password@ds135444.mlab.com:35444/restfest-2017-hackathon';
 const COLLECTION = 'hospitals';
+const QUERY_PARAMS = {
+    name: 'Hospital Name',
+    state: 'State'
+};
 let db; // will be assigned later
 
 function returnResults(res) {
@@ -27,8 +31,10 @@ app.get('/', (req, res) => {
 
 app.get('/hospitals', (req, res) => {
     let selector = {};
-    if (req.query.name !== undefined && req.query.name !== '') selector['Hospital Name'] = req.query.name;
-    if (req.query.state !== undefined && req.query.state !== '') selector['State'] = req.query.state;
+    Object.keys(QUERY_PARAMS).forEach(key => {
+        const value = req.query[key];
+        if (value !== undefined && value !== '') selector[QUERY_PARAMS[key]] = value;
+    })
     console.log('Selector:', selector);
     db.collection(COLLECTION).find(selector)
         .toArray(returnResults(res));
