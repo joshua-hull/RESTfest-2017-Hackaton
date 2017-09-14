@@ -25,7 +25,8 @@ app.get('/hospitals', (req, res) => {
 });
 
 app.get('/hospitals/:id', (req, res) => {
-    db.collection('hospitals').find({ _id: req.params.id }).toArray(returnResults(res));
+    const hospital = db.collection('hospitals').findOne({ _id: req.params.id });
+    res.json(hospital);
 })
 
 MongoClient.connect(MONGO_URL, (err, database) => {
