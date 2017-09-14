@@ -26,7 +26,7 @@ app.get('/hospitals/:id', (req, res) => {
     db.collection('hospitals').find(id).toArray(returnResults);
 })
 
-MongoClient.connect('mongo-url', (err, database) => {
+MongoClient.connect(MONGO_URL, (err, database) => {
     if (err) console.error(err);
 
     db = database;
